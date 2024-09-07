@@ -1,6 +1,8 @@
 package com.workBack.demo.projectStructure.cliente.clienteService;
 
 import com.workBack.demo.Utils.Info;
+import com.workBack.demo.Utils.mappers.ClienteMapper;
+import com.workBack.demo.projectStructure.cliente.ClienteDto;
 import com.workBack.demo.projectStructure.cliente.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,10 +54,12 @@ public class ClienteImpl implements ClienteService {
         Info info = new Info<>();
         try {
             Optional<Cliente> cliente = clienteRepository.findByEmail(email);
-            info.setData(cliente);
-            boolean hasData = (info.getData() != null);
-            info.setSuccess(hasData ? true : false);
-            info.setMessage(hasData ? "Email encontrado" : "Email não encontrado" );
+
+            ClienteDto clienteDto = cliente.isPresent() ? ClienteMapper.convertClientToClientDto(cliente.get()) : null;
+
+            info.setData(clienteDto);
+            info.setSuccess(cliente.isPresent());
+            info.setMessage(cliente.isPresent() ? "Email encontrado" : "Email não encontrado" );
         } catch (Exception e) {
             info.setErrorMessage("Ocorreu um Erro tentando buscar o Email");
             return info;

@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+
+@CrossOrigin(origins = "http://localhost:4200")
 @Controller
 @RestController
 @RequestMapping("/clientRegister")
@@ -31,13 +33,14 @@ public class ClienteController {
 
     @GetMapping("/search-client")
     public ResponseEntity<Info<?>> searchEmail(@RequestParam String email){
+        Info<?> info = new Info<>();
         try {
-            Info<?> info = clientImpl.searchClientByEmail(email);
-
+             info = clientImpl.searchClientByEmail(email);
         }catch (Exception e){
-            return null;
+            info.setErrorMessage("Erro ao buscar email do cliente");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(info);
         }
-        return null;
+        return ResponseEntity.status(info.isSuccess() ? HttpStatus.OK : HttpStatus.NOT_FOUND).body(info);
     }
 
 
