@@ -8,8 +8,8 @@ import {UpdateDataComponent} from './update-data/update-data.component';
 import {ChooseTripLocationsComponent} from './choose-trip-locations/choose-trip-locations.component';
 import {FormsModule} from "@angular/forms";
 import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
-import {SnackbarComponent} from './shared/snackbar/snackbar.component';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
+import {LeftSideBarComponent} from "./left-side-bar/left-side-bar.component";
 
 @NgModule({
   declarations: [
@@ -17,13 +17,13 @@ import {provideAnimationsAsync} from '@angular/platform-browser/animations/async
     MainScreenComponent,
     UpdateDataComponent,
     ChooseTripLocationsComponent,
-    SnackbarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    LeftSideBarComponent
   ],
   providers: [
     provideClientHydration(),
